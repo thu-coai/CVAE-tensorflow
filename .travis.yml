@@ -4,6 +4,9 @@ language: python
 python:
   - 3.6
 
+env:
+  - "COVERALLS_REPO_TOKEN=[secure]"
+
 cache: pip
 
 install:
