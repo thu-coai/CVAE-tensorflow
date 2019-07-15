@@ -522,7 +522,7 @@ class CVAEModel(object):
 						responses.append([])
 					# if data.eos_id in resp:
 					# 	resp = resp[:resp.index(data.eos_id)]
-					resp = data.trim_index(resp)
+					resp = data.trim(resp)
 					if len(resp) == 0:
 						resp = [data.unk_id]
 					responses[rid].append(resp + [data.eos_id])
