@@ -502,15 +502,6 @@ class CVAEModel(object):
 		return {key: val for key, val in res.items() if key not in ['reference', 'gen']}
 
 	def test_multi_ref(self, sess, data, word2vec, args):
-		def process_cands(candidates):
-			res = []
-			for cands in candidates:
-				tmp = []
-				for sent in cands:
-					tmp.append([data.go_id] + \
-						[wid if wid < data.vocab_size else data.unk_id for wid in sent] + [data.eos_id])
-				res.append(tmp)
-			return res
 		prec_rec_metrics = data.get_multi_ref_metric(generated_num_per_context=args.repeat_N, word2vec=word2vec)
 		for batch_data in self.multi_reference_batches(data, args.batch_size):
 			responses = []
@@ -526,7 +517,7 @@ class CVAEModel(object):
 					if len(resp) == 0:
 						resp = [data.unk_id]
 					responses[rid].append(resp + [data.eos_id])
-			metric_data = {'candidate_allvocabs': process_cands(batch_data['candidate_allvocabs']), 'multiple_gen_key': responses}
+			metric_data = {'candidate_allvocabs': batch_data['candidate_allvocabs'], 'multiple_gen_key': responses}
 			prec_rec_metrics.forward(metric_data)
 
 		res = prec_rec_metrics.close()
