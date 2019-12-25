@@ -223,10 +223,10 @@ class CVAEModel(object):
 		for i, speaker in enumerate(raw_batch['posts_length']):
 			batch['contexts_length'].append(len(raw_batch['posts_length'][i]))
 
-			if raw_batch['posts_length'][i]:
+			if raw_batch['posts_length'][i].size > 0:
 				max_post_len = max(max_post_len, max(raw_batch['posts_length'][i]))
-			batch['posts_length'].append(raw_batch['posts_length'][i] + \
-										 [0] * (max_cxt_size - len(raw_batch['posts_length'][i])))
+			batch['posts_length'].append(np.concatenate([raw_batch['posts_length'][i],
+										 np.array([0] * (max_cxt_size - len(raw_batch['posts_length'][i])))], 0))
 
 		batch['contexts'] = raw_batch['contexts'][:, :, :max_post_len]
 		batch['responses'] = raw_batch['responses'][:, :np.max(raw_batch['responses_length'])]
