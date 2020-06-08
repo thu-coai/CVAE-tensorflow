@@ -1,0 +1,4 @@
+{
+  "test_CVAE_tensorflow.py::test_test": true,
+  "test_CVAE_tensorflow.py::test_train": true
+}

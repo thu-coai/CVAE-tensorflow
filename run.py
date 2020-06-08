@@ -76,7 +76,7 @@ def run(*argv):
 	args.batch_size = 3
 	args.grad_clip = 5.0
 	args.show_sample = [0]
-	args.min_vocab_times = 5
+	args.min_frequent_vocab_times = 5
 	args.max_sent_length = 50
 	args.max_turn_length = 1000
 	args.checkpoint_steps = 1
